@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Getting Started Example</title>
+    <link rel="stylesheet" type="text/css" href="/extjs/resources/css/ext-all.css" />
+    <script src="/extjs/adapter/ext/ext-base.js"></script>
+    <script src="/extjs/ext-all-debug.js"></script>
+   
+</head>
+
+<body>
+    <!-- Nothing in the body -->
+    <script>
+  //   Ext.onReady(function() {
+  //       var movie_form = new Ext.FormPanel({
+  //           url: 'movie-form-submit.php',
+  //           renderTo: document.body,
+  //           frame: true,
+  //           title: 'Search for email',
+  //           width: 250,
+  //           items: [{
+  //               xtype: 'textfield',
+  //               fieldLabel: 'Email ?',
+  //               name: 'title',
+  //               allowBlank: false
+  //           }, {
+		// 		xtype: 'tbbutton',
+		// 		text: 'Check'
+		// }]
+
+  //       });
+  //   });
+    Ext.onReady(function() {
+    	var login_form = new Ext.FormPanel({
+    		url: 'movie-form-submit.php',
+            renderTo: document.body,
+            frame: true,
+            title: 'Sign in',
+            width: 600,
+            items: [{
+            	xtype: 'textfield',
+            	fieldLabel:'Email:',
+            	name: 'lblemail',
+            	allowBlank: false
+            },
+            {
+            	xtype: 'textfield',
+            	fieldLabel:'Password:',
+            	name: 'lblpassword',
+            	allowBlank: false 
+            }, {
+            	xtype: 'tbbutton',
+            	text: 'Sign in'
+            }]
+    	});
+    });
+    </script>
+</body>
+
+</html>

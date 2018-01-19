@@ -29,4 +29,40 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+<script>
+   Ext.onReady(function() {
+      var login_form = new Ext.FormPanel({
+        url: 'movie-form-submit.php',
+            renderTo: document.body,
+            frame: true,
+            title: 'New user',
+            width: 450,
+            items: [{
+              xtype: 'textfield',
+              fieldLabel:'Email:',
+              name: 'lblemail',
+              allowBlank: false
+            },
+            {
+              xtype: 'textfield',
+              fieldLabel:'Password:',
+              name: 'lblpassword',
+              allowBlank: false 
+            },
+            {
+              xtype: 'textfield',
+              fieldLabel:'Login:',
+              name: 'lbllogin',
+              allowBlank: false 
+            },
+             {
+              xtype: 'tbbutton',
+              text: 'Create user',
+              }, {
+              xtype: 'tbbutton',
+              text: 'Back'
+              }]
+      });
+    });
+    </script>
 <% end %>
