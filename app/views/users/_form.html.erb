@@ -1,68 +1,74 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <% if user.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+            <ul>
+                <% user.errors.full_messages.each do |message| %>
+                    <li>
+                        <%= message %>
+                    </li>
+                    <% end %>
+            </ul>
+        </div>
+        <% end %>
+            <div class="field">
+                <%= form.label :name %>
+                    <%= form.text_field :name, id: :user_name %>
+            </div>
+            <div class="field">
+                <%= form.label :email %>
+                    <%= form.text_field :email, id: :user_email %>
+            </div>
+            <div class="field">
+                <%= form.label :login %>
+                    <%= form.text_field :login, id: :user_login %>
+            </div>
+            <div class="actions">
+                <%= form.submit %>
+            </div>
+            <script>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :login %>
-    <%= form.text_field :login, id: :user_login %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<script>
-   Ext.onReady(function() {
-      var login_form = new Ext.FormPanel({
-        url: 'movie-form-submit.php',
-            renderTo: document.body,
-            frame: true,
-            title: 'New user',
-            width: 450,
-            items: [{
-              xtype: 'textfield',
-              fieldLabel:'Email:',
-              name: 'lblemail',
-              allowBlank: false
-            },
-            {
-              xtype: 'textfield',
-              fieldLabel:'Password:',
-              name: 'lblpassword',
-              allowBlank: false 
-            },
-            {
-              xtype: 'textfield',
-              fieldLabel:'Login:',
-              name: 'lbllogin',
-              allowBlank: false 
-            },
-             {
-              xtype: 'tbbutton',
-              text: 'Create user',
-              }, {
-              xtype: 'tbbutton',
-              text: 'Back'
-              }]
-      });
-    });
-    </script>
-<% end %>
+            Ext.onReady(function() {
+                var login_form = new Ext.FormPanel({
+                    url: 'movie-form-submit.php',
+                    id: 'newuser',
+                    renderTo: document.body,
+                    frame: true,
+                    title: 'New user',
+                    width: 450,
+                    items: [{
+                            xtype: 'textfield',
+                            fieldLabel: 'Email:',
+                            name: 'lblemail',
+                            allowBlank: false,
+                            inputType: 'email' 
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'Password:',
+                            name: 'lblpassword',
+                            allowBlank: false,
+                            inputType: 'password' 
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'Login:',
+                            name: 'lbllogin',
+                            allowBlank: false
+                        },
+                        {
+                            xtype: 'tbbutton',
+                            text: 'Create user',
+                            listeners: {
+                              click: function() { alert('Created user!') }
+                            }
+                          
+                        }, {
+                            xtype: 'tbbutton',
+                            text: 'Back'
+                        }
+                    ]
+                });
+            });
+            </script>
+            <% end %>
