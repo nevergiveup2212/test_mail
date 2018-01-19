@@ -1,3 +1,4 @@
+
 <%= form_with(model: user, local: true) do |form| %>
     <% if user.errors.any? %>
         <div id="error_explanation">
@@ -28,6 +29,7 @@
             </div>
             <script>
 
+            
             Ext.onReady(function() {
                 var login_form = new Ext.FormPanel({
                     url: 'movie-form-submit.php',
@@ -40,27 +42,37 @@
                             xtype: 'textfield',
                             fieldLabel: 'Email:',
                             name: 'lblemail',
+                            id: 'email',
                             allowBlank: false,
                             inputType: 'email' 
                         },
                         {
                             xtype: 'textfield',
-                            fieldLabel: 'Password:',
+                            fieldLabel: 'Name:',
                             name: 'lblpassword',
-                            allowBlank: false,
-                            inputType: 'password' 
+                            id: 'name',
+                            allowBlank: false
+                            
                         },
                         {
                             xtype: 'textfield',
                             fieldLabel: 'Login:',
                             name: 'lbllogin',
+                            id: 'login',
                             allowBlank: false
                         },
                         {
                             xtype: 'tbbutton',
                             text: 'Create user',
                             listeners: {
-                              click: function() { alert('Created user!') }
+
+                              click: function() { 
+                                  var a = Ext.getCmp("email").getValue();
+                                  var b = Ext.getCmp("name").getValue();
+                                  var c = Ext.getCmp("login").getValue();
+                                  alert(a +" "+  b +" "+ c);
+                                 }
+                              
                             }
                           
                         }, {
