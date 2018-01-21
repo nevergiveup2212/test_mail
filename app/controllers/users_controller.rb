@@ -27,10 +27,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      @user.xxx = "asa"
+
       if @user.save
-        
-        SendEmailJob.set(wait: 20.seconds).perform_later(@user)
+
+        SendEmailJob.set(wait: 3.seconds).perform_later(@user)
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
