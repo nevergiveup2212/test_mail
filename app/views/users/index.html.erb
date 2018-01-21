@@ -27,5 +27,37 @@
 </table>
 
 <br>
+<script>
+Ext.onReady(function(){
 
+// add your data store here
+  var store = new Ext.data.Store({
+    url: 'users.json',
+    reader: new Ext.data.JsonReader({
+      root: 'rows',
+      id:'id'
+    },[
+      'id',
+      'name',
+      'email',
+      'login'
+    ])
+  });
+  store.load();
+
+var grid = new Ext.grid.GridPanel({
+  renderTo: document.body,
+  frame: true,
+  tittle: "Users database",
+  height: 200,
+  width: 500,
+  store: store,
+  columns: [
+    {header: "Name", dataIndex: 'name'},
+    {header: "Email", dataIndex: 'email'},
+    {header: "Login", dataIndex: 'login'}
+  ]
+  });
+});
+</script>
 <%= link_to 'New User', new_user_path %>

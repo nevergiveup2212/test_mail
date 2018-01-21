@@ -28,8 +28,6 @@
                 <%= form.submit %>
             </div>
             <script>
-
-            
             Ext.onReady(function() {
                 var login_form = new Ext.FormPanel({
                     url: 'movie-form-submit.php',
@@ -44,7 +42,7 @@
                             name: 'lblemail',
                             id: 'email',
                             allowBlank: false,
-                            inputType: 'email' 
+                            inputType: 'email'
                         },
                         {
                             xtype: 'textfield',
@@ -52,7 +50,7 @@
                             name: 'lblpassword',
                             id: 'name',
                             allowBlank: false
-                            
+
                         },
                         {
                             xtype: 'textfield',
@@ -64,23 +62,27 @@
                         {
                             xtype: 'tbbutton',
                             text: 'Create user',
+                            id: 'submit',
                             listeners: {
 
-                              click: function() { 
+                              click: function() {
                                   var a = Ext.getCmp("email").getValue();
                                   var b = Ext.getCmp("name").getValue();
                                   var c = Ext.getCmp("login").getValue();
-                                  alert(a +" "+  b +" "+ c);
+                                  
                                  }
-                              
+
                             }
-                          
+
                         }, {
                             xtype: 'tbbutton',
                             text: 'Back'
+
                         }
                     ]
                 });
             });
+
+
             </script>
             <% end %>
