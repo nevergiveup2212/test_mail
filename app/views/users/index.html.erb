@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Users</h1>
+<!-- <h1>Users</h1>
 
 <table>
   <thead>
@@ -24,8 +24,9 @@
       </tr>
     <% end %>
   </tbody>
-</table>
+</table> -->
 <div id="abc"></div>
+<div id="aaa"></div>
 <br>
 <script>
 Ext.onReady(function(){
@@ -41,23 +42,61 @@ Ext.onReady(function(){
     'login']
   });
   store.load();
- 
+  var edit = new Ext.form.TextField();
 
-  var grid = new Ext.grid.GridPanel({
+  var grid = new Ext.grid.EditorGridPanel({
     renderTo: Ext.get("abc"),
     frame: true,
     title: "Users database",
     height: 200,
-    width: 500,
+    width: 600,
     store: store,
 
     columns: [
-      {id: 'id', dataIndex: 'id'},
-      {header: "Name", dataIndex: 'name'},
-      {header: "Email", dataIndex: 'email'},
-      {header: "Login", dataIndex: 'login'}
+      
+      {id: 'id', dataIndex: 'id', editor: edit},
+      {header: "Name", dataIndex: 'name', editor: edit},
+      {header: "Email", dataIndex: 'email', editor: edit},
+      {header: "Login", dataIndex: 'login', editor: edit},
+      {
+        header: 'Action',
+        width: 145,
+        sortable: false,
+        dataIndex: 'action'
+    }
     ]
   });
+  
+  
 });
+
+var newBtn =  new Ext.Button({
+        renderTo: Ext.get('aaa'),
+        text    : 'New user',
+        handler : function() {
+           //alert('You clicked add button');
+          var win;
+          if(!win){
+              win = new Ext.Window({
+                  applyTo     : 'hello-win',
+                  layout      : 'fit',
+                  width       : 500,
+                  height      : 300,
+                  closeAction :'hide',
+                  plain       : true,
+                  buttons: [{
+                      text     : 'Submit',
+                      disabled : true
+                  },{
+                      text     : 'Close',
+                      handler  : function(){
+                          win.hide();
+                      }
+                  }]
+              });
+              win.show();
+          }  
+        }
+    });
 </script>
-<%= link_to 'New User', new_user_path %>
+
