@@ -65,12 +65,27 @@
                             id: 'submit',
                             listeners: {
 
-                              click: function() {
-                                  var a = Ext.getCmp("email").getValue();
-                                  var b = Ext.getCmp("name").getValue();
-                                  var c = Ext.getCmp("login").getValue();
-                                  
-                                 }
+                                click: function() {
+                                    var name = Ext.getCmp('name');
+                                    var email = Ext.getCmp('email');
+                                    var login = Ext.getCmp('login');
+                                    
+                                    Ext.Ajax.request({
+                                     url : 'http://localhost:3000/users/new',
+                                              method: 'POST',
+                                              params :{name:name.value,email:email.value, login:login.value},
+                                              success: function ( result, request ) {
+                                                  var jsonData = Ext.util.JSON.decode(result.responseText);
+                                                  var resultMessage = jsonData.data.result;
+                                                  
+                                           },
+                                              failure: function ( result, request ) {
+                                               var jsonData = Ext.util.JSON.decode(result.responseText);
+                                               var resultMessage = jsonData.data.result;
+                                               
+                                           }
+                                   });
+                                }
 
                             }
 
