@@ -12,7 +12,7 @@
             </ul>
         </div>
         <% end %>
-            <div class="field">
+<!--             <div class="field">
                 <%= form.label :name %>
                     <%= form.text_field :name, id: :user_name %>
             </div>
@@ -26,11 +26,11 @@
             </div>
             <div class="actions">
                 <%= form.submit %>
-            </div>
+            </div> -->
             <script>
             Ext.onReady(function() {
                 var login_form = new Ext.FormPanel({
-                    url: 'movie-form-submit.php',
+                    url: 'login_form.submit',
                     id: 'newuser',
                     renderTo: document.body,
                     frame: true,
@@ -66,24 +66,19 @@
                             listeners: {
 
                                 click: function() {
-                                    var name = Ext.getCmp('name');
-                                    var email = Ext.getCmp('email');
-                                    var login = Ext.getCmp('login');
+                                    var name = Ext.getCmp('name').getValue();
+                                    var email = Ext.getCmp('email').getValue();
+                                    var login = Ext.getCmp('login').getValue();
                                     
                                     Ext.Ajax.request({
-                                     url : 'http://localhost:3000/users/new',
-                                              method: 'POST',
-                                              params :{name:name.value,email:email.value, login:login.value},
-                                              success: function ( result, request ) {
-                                                  var jsonData = Ext.util.JSON.decode(result.responseText);
-                                                  var resultMessage = jsonData.data.result;
-                                                  
-                                           },
-                                              failure: function ( result, request ) {
-                                               var jsonData = Ext.util.JSON.decode(result.responseText);
-                                               var resultMessage = jsonData.data.result;
-                                               
-                                           }
+                                        url:'/create',
+                                        
+                                        success: function(response, opts) {
+                                            Ext.MessageBox.alert("Congratulations!","Create user successfully!!");
+                                            
+                                        },
+                                        jsonData: {name: name, email: email, login: login},
+                                       
                                    });
                                 }
 
