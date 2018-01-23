@@ -27,10 +27,12 @@
 </table> -->
 <div id="abc"></div>
 <div id="aaa"></div>
+<div id ="login_form"></div>
+
 <br>
 <script>
 Ext.onReady(function(){
-
+  Ext.QuickTips.init();
 // add your data store here
   var store = new Ext.data.JsonStore({
     url: 'users.json',
@@ -44,59 +46,78 @@ Ext.onReady(function(){
   store.load();
   var edit = new Ext.form.TextField();
 
-  var grid = new Ext.grid.EditorGridPanel({
+  var grid = new Ext.grid.GridPanel({
     renderTo: Ext.get("abc"),
     frame: true,
     title: "Users database",
     height: 200,
     width: 600,
     store: store,
-
+    id: 'myGrid',
     columns: [
       
-      {id: 'id', dataIndex: 'id', editor: edit},
-      {header: "Name", dataIndex: 'name', editor: edit},
-      {header: "Email", dataIndex: 'email', editor: edit},
-      {header: "Login", dataIndex: 'login', editor: edit},
+      {id: 'id', dataIndex: 'id'},
+      {header: "Name", dataIndex: 'name'},
+      {header: "Email", dataIndex: 'email'},
+      {header: "Login", dataIndex: 'login'},
       {
-        header: 'Action',
-        width: 145,
-        sortable: false,
-        dataIndex: 'action'
-    }
-    ]
+        xtype : 'actioncolumn',
+        header : 'Action',
+        width : 150,
+        align : 'center',
+        items : [
+            {
+                icon:'visibility-button.png',
+                tooltip : 'Show',
+                handler : function (grid, rowIndex, colIndex, item, e, record) {
+                    //do your delete record function here
+                    var selectedRecord = grid.getSelectionModel().getSelected();
+                    // to get value of a field in the record
+                    var val = selectedRecord.get('id');  
+                    Ext.Ajax.request({
+                        url: '/show',
+                        params: {id: val}
+                      });
+                        
+                }
+                
+            },
+            {
+                icon:'edit.png',
+                tooltip : 'Edit',
+                handler : function (grid, rowIndex, colIndex, item, e, record) {
+                    //do your delete record function here
+                }
+                
+            },
+            {
+                icon:'delete.png',
+                tooltip : 'Delete',
+                handler : function (grid, rowIndex, colIndex, item, e, record) {
+                    //do your delete record function here
+                }
+                
+            }
+        ]
+    }]
   });
   
+
+  login_form.hide();
+  var newBtn =  new Ext.Button({
+        renderTo: Ext.get('aaa'),
+        text    : 'New user',
+        id: 'btn',
+        handler: function () {
+            //document.location.href = "http://localhost:3000/users/new";           
+             login_form.show();
+        }
+    });
+
+    
   
 });
 
-var newBtn =  new Ext.Button({
-        renderTo: Ext.get('aaa'),
-        text    : 'New user',
-        handler : function() {
-           //alert('You clicked add button');
-          var win;
-          if(!win){
-              win = new Ext.Window({
-                  applyTo     : 'hello-win',
-                  layout      : 'fit',
-                  width       : 500,
-                  height      : 300,
-                  closeAction :'hide',
-                  plain       : true,
-                  buttons: [{
-                      text     : 'Submit',
-                      disabled : true
-                  },{
-                      text     : 'Close',
-                      handler  : function(){
-                          win.hide();
-                      }
-                  }]
-              });
-              win.show();
-          }  
-        }
-    });
-</script>
 
+</script>
+<%= javascript_include_tag "myjs.js"%>
