@@ -27,6 +27,11 @@
 </table> -->
 <div id="abc"></div>
 <div id="aaa"></div>
+
+<div id ="login_form"></div>
+<!-- <div id="usrgrid"></div> -->
+<div id="register_form"></td>
+
 <br>
 <script>
 Ext.onReady(function(){
@@ -98,5 +103,34 @@ var newBtn =  new Ext.Button({
           }  
         }
     });
+
+
+    
+  
+
+
+
+var btn = new Ext.Button({
+  id: 'btnRegister',
+  text: 'Register',
+  width: 110,
+  style: 'margin-right: 5px;',
+  renderTo: "register_form",
+  listeners: {
+    click: function(e){
+      console.log("clicked...");
+      var options = {
+          'title': "Registration From"
+      }
+      register_form = new RegisterForm(options);
+      register_form.show();
+    }
+  }
+});
 </script>
+
+<script src="/prototype.js"></script>
+<script src="/register_form.js"></script>
+<script src="/myjs.js"></script>
+<!-- <script src="/grid_user.js"></script> -->
 
