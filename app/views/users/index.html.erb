@@ -29,15 +29,25 @@
 <div id="aaa"></div>
 <div id ="login_form"></div>
 <!-- <div id="usrgrid"></div> -->
-<div id="register_form"></td>
+<div id="register_form"></div>
+
 <br>
 <script>
 Ext.onReady(function(){
+
   Ext.QuickTips.init();
+  var myMask = new Ext.LoadMask(Ext.getBody(), {
+    cls: 'lmask'
+    
+    });
+  myMask.show();
+  setTimeout(function() {
+        myMask.hide();
+    }, 10000);
 // add your data store here
   var store = new Ext.data.JsonStore({
     url: 'users.json',
-    //choice field 
+    //choice field
     fields: [
     'id',
     'name',
@@ -46,7 +56,7 @@ Ext.onReady(function(){
   });
   store.load();
   var edit = new Ext.form.TextField();
-
+  var sm = new Ext.grid.CheckboxSelectionModel();
   var grid = new Ext.grid.GridPanel({
     renderTo: Ext.get("abc"),
     frame: true,
@@ -56,11 +66,12 @@ Ext.onReady(function(){
     store: store,
     id: 'myGrid',
     columns: [
-      
+
       {id: 'id', dataIndex: 'id'},
       {header: "Name", dataIndex: 'name'},
       {header: "Email", dataIndex: 'email'},
       {header: "Login", dataIndex: 'login'},
+
       {
         xtype : 'actioncolumn',
         header : 'Action',
@@ -74,14 +85,18 @@ Ext.onReady(function(){
                     //do your delete record function here
                     var selectedRecord = grid.getSelectionModel().getSelected();
                     // to get value of a field in the record
-                    var val = selectedRecord.get('id');  
+                    var val = selectedRecord.data.id;
                     Ext.Ajax.request({
-                        url: '/show',
+                        url: "/",
+                        method: 'GET',
+                        success: function(){
+                          document.location.href = '<%= users_path %>/'+val;
+                        },
                         params: {id: val}
                       });
-                        
+
                 }
-                
+
             },
             {
                 icon:'edit.png',
@@ -89,27 +104,46 @@ Ext.onReady(function(){
                 handler : function (grid, rowIndex, colIndex, item, e, record) {
                     //do your delete record function here
                 }
-                
+
             },
             {
                 icon:'delete.png',
                 tooltip : 'Delete',
                 handler : function (grid, rowIndex, colIndex, item, e, record) {
                     //do your delete record function here
-                }
-                
-            },
-            {
-              xtype: 'checkbox',
-              fieldLabel : "",
-              boxLabel   : 'A',
-              inputValue : 'a'
+                    var sm = grid.getSelectionModel();
+                    var sel = sm.getSelected();
+                    var val = sel.data.id;
+                    if (sm.hasSelection()){
 
-            }
+                      Ext.Ajax.request({
+                        url: "/users/"+val,
+                        method: 'DELETE',
+                        success: function(){
+                          grid.getStore().remove(sel)
+                        },
+                        params: {id: val}
+                      });
+                      // Ext.Msg.show({
+                      //   title: 'Remove User',
+                      //   buttons: Ext.MessageBox.YESNOCANCEL,
+                      //   msg: 'Remove '+ sel.data.name+'?',
+                      //   fn: function(btn){
+                      //       if (btn == 'Yes'){
+                      //           var rec = grid.getStore().getAt(rowIndex);
+                      //
+                      //         }
+                      //       }
+                      //     });
+                      };
+
+
+              }
+          }
         ]
     }]
   });
-  
+
 
   login_form.hide();
   var newBtn =  new Ext.Button({
@@ -117,13 +151,13 @@ Ext.onReady(function(){
         text    : 'New user',
         id: 'btn',
         handler: function () {
-            //document.location.href = "http://localhost:3000/users/new";           
+            //document.location.href = "http://localhost:3000/users/new";
              login_form.show();
         }
     });
 
-    
-  
+
+
 });
 
 

@@ -33,6 +33,7 @@ var login_form = new Ext.Window({
                 id: 'login',
                 allowBlank: false
             }
+
             ],
             buttons: [{
                 text: 'Create',
@@ -49,14 +50,14 @@ var login_form = new Ext.Window({
                                 Ext.getCmp('myGrid').getStore().load();
                                 login_form.hide();
                                 Ext.getCmp('myGrid').getView().reload();
-                                
-                                
+
+
                             },
                             failure: function(response, opts){
                                 Ext.MessageBox.alert("Error", "Can't create user!");
                             },
                             jsonData: { name: name, email: email, login: login }
-                            
+
                         });
                     }
 
@@ -65,23 +66,22 @@ var login_form = new Ext.Window({
                 {
                     text: 'Back',
                     handler: function() {
-
                     login_form.hide();
                     }
                 }
             ]
-        
+
             // ,
             // {
             //     xtype: 'tbbutton',
             //     text: 'Create user',
             //     id: 'submit',
-                
+
 
             // }, {
             //     xtype: 'tbbutton',
             //     text: 'Back',
-                
+
 
             // }]
 });
